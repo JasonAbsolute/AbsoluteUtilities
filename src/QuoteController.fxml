@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <VBox prefHeight="645.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuoteController">
   <children>
@@ -20,15 +21,19 @@
         <tabs>
           <Tab text="Quote">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="materialCostTextField" layoutX="14.0" layoutY="56.0" onAction="#validateMaterialCostTextField" promptText="Material Cost" />
+                        <TextField fx:id="setupCostTextField" layoutX="182.0" layoutY="56.0" onAction="#validateSetupCostTextField" promptText="Setup Cost" />
+                        <TextField fx:id="cycleTimeTextField" layoutX="350.0" layoutY="56.0" onAction="#validateCycleTimeTextField" promptText="Cycle Time Cost" />
+                        <TextField fx:id="quantityTextField" layoutX="14.0" layoutY="14.0" onAction="#addQuantityToList" promptText="Quantity of Part" />
+                        <Button fx:id="addQuantityButton" layoutX="182.0" layoutY="14.0" mnemonicParsing="false" onAction="#addQuantityToList" text="Add Quantity" />
+                        <Text fx:id="textListOfQuantity" layoutX="281.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts to be Quoted: " />
+                     </children>
+                  </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <ImageView fitHeight="422.0" fitWidth="593.0">
-         <image>
-            <Image url="@../img/Capture.PNG" />
-         </image>
-      </ImageView>
   </children>
 </VBox>
