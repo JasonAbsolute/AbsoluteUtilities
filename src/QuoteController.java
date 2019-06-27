@@ -1,11 +1,17 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class QuoteController {
+public class QuoteController implements Initializable {
 
     @FXML
     private TextField materialCostTextField;
@@ -15,10 +21,30 @@ public class QuoteController {
     private TextField quantityTextField;
     @FXML
     private Text textListOfQuantity;
+    @FXML
+    private ChoiceBox comboBoxOutsideServices;
+    @FXML
+    private Button addServiceToTableButton;
+    @FXML
+    private TableView masterTableView;
+    @FXML
+    private TextField costPerPartTextBox;
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
-   // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
+    // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
+    private ObservableList<TableEntry> data = FXCollections.observableArrayList();
+    private ArrayList<OutsideService> listOfServices = new ArrayList<>();
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Setting up combo box");
+        comboBoxOutsideServices.getItems().addAll("Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "transportation", "misc");
+        System.out.println("ComboBox was setup");
+        masterTableView.setEditable(true);
+
+    }
 
 
     @FXML
@@ -75,6 +101,8 @@ public class QuoteController {
                 System.out.println(q);
             }
             textListOfQuantity.setText(sb.toString());
+            //clears the table for new info
+            setUpTableWithPartAmounts();
 
         } else {
             inputError.setTitle("Input for Quantity");
@@ -84,6 +112,14 @@ public class QuoteController {
             inputError.showAndWait();
         }
         quantityTextField.clear();
+    }
+
+    @FXML
+    public void addServiceToTable() {
+        OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities, costPerPartTextBox.getText().toString());
+        listOfServices.add(serviceToAdd);
+        System.out.println("added " + comboBoxOutsideServices.getValue().toString() + " with amounts of " + listOfQuantities.toString());
+        masterTableView.getItems().add(serviceToAdd);
     }
 
 
@@ -109,10 +145,11 @@ public class QuoteController {
 
     /**
      * same as is validInput helper method but this is for whole numbers so doubles will not work
+     *
      * @param input
      * @return
      */
-    private Boolean isValidInput2(String input){
+    private Boolean isValidInput2(String input) {
         char[] chars = input.toCharArray();
         boolean validInput = false;
         for (char c : chars) {
@@ -125,4 +162,22 @@ public class QuoteController {
         return validInput;
     }
 
+    private void setUpTableWithPartAmounts() {
+        masterTableView.getItems().clear();
+        masterTableView.getColumns().clear();
+        masterTableView.setEditable(true);
+        TableColumn serviceColumn = new TableColumn("Service");
+        serviceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
+        masterTableView.getColumns().add(serviceColumn);
+        for (int i = 0; i < listOfQuantities.size(); i++) {
+            TableColumn columnToAdd = new TableColumn("Cost of " + listOfQuantities.get(i));
+            columnToAdd.setCellValueFactory(new PropertyValueFactory<>("quantity" + i));
+            masterTableView.getColumns().add(columnToAdd);
+        }
+    }
+
+
+    public void onEditChanged(TableColumn.CellEditEvent cellEditEvent) {
+       //e outsideService = masterTableView.getSelectionModel().getSelectedItem();
+    }
 }
