@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * this will help with adding the out side services like:
- * heat treat, grinding, wielding, ;aser, plating, misc/oddballs
+ * heat treat, grinding, wielding, laser, plating, misc/oddballs
  */
 public class OutsideService {
     private String service;
