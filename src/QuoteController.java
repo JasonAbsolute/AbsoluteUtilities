@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class QuoteController implements Initializable {
@@ -116,7 +117,8 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void addServiceToTable() {
-        OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities, costPerPartTextBox.getText().toString());
+        OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities);
+        serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText().toString());
         listOfServices.add(serviceToAdd);
         System.out.println("added " + comboBoxOutsideServices.getValue().toString() + " with amounts of " + listOfQuantities.toString());
         masterTableView.getItems().add(serviceToAdd);
@@ -166,6 +168,7 @@ public class QuoteController implements Initializable {
         masterTableView.getItems().clear();
         masterTableView.getColumns().clear();
         masterTableView.setEditable(true);
+        Collections.sort(listOfQuantities);
         TableColumn serviceColumn = new TableColumn("Service");
         serviceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
         masterTableView.getColumns().add(serviceColumn);
