@@ -27,7 +27,7 @@ public class QuoteController implements Initializable {
     @FXML
     private Button addServiceToTableButton;
     @FXML
-    private TableView masterTableView;
+    private TableView<OutsideService> masterTableView;
     @FXML
     private TextField costPerPartTextBox;
 
@@ -118,10 +118,12 @@ public class QuoteController implements Initializable {
     @FXML
     public void addServiceToTable() {
         OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities);
-        serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText().toString());
+        serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
         listOfServices.add(serviceToAdd);
-        System.out.println("added " + comboBoxOutsideServices.getValue().toString() + " with amounts of " + listOfQuantities.toString());
         masterTableView.getItems().add(serviceToAdd);
+        costPerPartTextBox.clear();
+
+
     }
 
 
@@ -167,20 +169,19 @@ public class QuoteController implements Initializable {
     private void setUpTableWithPartAmounts() {
         masterTableView.getItems().clear();
         masterTableView.getColumns().clear();
-        masterTableView.setEditable(true);
         Collections.sort(listOfQuantities);
-        TableColumn serviceColumn = new TableColumn("Service");
+        TableColumn<OutsideService, String> serviceColumn = new TableColumn("Service");
         serviceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
         masterTableView.getColumns().add(serviceColumn);
         for (int i = 0; i < listOfQuantities.size(); i++) {
             TableColumn columnToAdd = new TableColumn("Cost of " + listOfQuantities.get(i));
-            columnToAdd.setCellValueFactory(new PropertyValueFactory<>("quantity" + i));
+            columnToAdd.setCellValueFactory(new PropertyValueFactory<>("numberToReturn"));
             masterTableView.getColumns().add(columnToAdd);
         }
     }
 
-
-    public void onEditChanged(TableColumn.CellEditEvent cellEditEvent) {
-       //e outsideService = masterTableView.getSelectionModel().getSelectedItem();
+    @FXML
+    public void clearTableContents(){
+        masterTableView.getItems().clear();
     }
 }
