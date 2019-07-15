@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -36,8 +37,13 @@ public class QuoteController implements Initializable {
     private ArrayList<Integer> listOfQuantities = new ArrayList();
     // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
-    private ObservableList<TableEntry> data = FXCollections.observableArrayList();
     private ArrayList<OutsideService> listOfServices = new ArrayList<>();
+
+    //Three text fields that will be saved as variables
+    private double materialCost;
+    private double settingUpCost;
+    private double cycleTimeCost;
+
 
 
     @Override
@@ -119,11 +125,20 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void addServiceToTable() {
-        OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities);
-        serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
-        listOfServices.add(serviceToAdd);
-        masterTableView.getItems().add(serviceToAdd);
-        costPerPartTextBox.clear();
+       try {
+           OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities);
+           serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
+           listOfServices.add(serviceToAdd);
+           masterTableView.getItems().add(serviceToAdd);
+           costPerPartTextBox.clear();
+       } catch (Exception error){
+           System.out.println("There was an error with the adding to table");
+           inputError.setTitle("Input For Service");
+           inputError.setHeaderText("Service Error");
+           inputError.setContentText("The input for Service was not done correctly. " +
+                   "\nMake sure the service has a service and the input is valid");
+           inputError.showAndWait();
+       }
 
 
     }

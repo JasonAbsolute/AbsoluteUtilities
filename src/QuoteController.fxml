@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -46,7 +45,6 @@
                               <TableColumn prefWidth="75.0" text="Service" />
                            </columns></TableView>
                                 <ChoiceBox fx:id="comboBoxOutsideServices" layoutX="14.0" layoutY="135.0" prefWidth="150.0" />
-                                <Button fx:id="addServiceToTableButton" layoutX="348.0" layoutY="135.0" mnemonicParsing="false" onAction="#addServiceToTable" text="Add Service" />
                         <GridPane layoutX="503.0" layoutY="169.0" prefHeight="250.0" prefWidth="365.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="25.0" />
@@ -60,6 +58,7 @@
                         <TextField fx:id="costPerPartTextBox" layoutX="176.0" layoutY="135.0" promptText="Cost per part" />
                         <JFXButton fx:id="addQuantityButton" layoutX="182.0" layoutY="13.0" onAction="#addQuantityToList" ripplerFill="#7c7ced" style="-fx-background-color: #dddddf;" text="Add Quantity" />
                         <JFXButton layoutX="14.0" layoutY="431.0" onAction="#clearTableContents" ripplerFill="RED" style="-fx-border-color: #c7a8a8; -fx-background-color: #dcc3c3;" text="Clear Table Content" />
+                        <JFXButton fx:id="addServiceToTableButton" layoutX="346.0" layoutY="135.0" onAction="#addServiceToTable" ripplerFill="#ffe800" style="-fx-background-color: #dddddf;" text="Add Service" />
                             </children>
                         </AnchorPane>
                     </content>
