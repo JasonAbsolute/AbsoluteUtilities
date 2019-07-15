@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTreeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +26,7 @@ public class QuoteController implements Initializable {
     @FXML
     private Text textListOfQuantity;
     @FXML
-    private ChoiceBox comboBoxOutsideServices;
+    private JFXComboBox jFXComboBoxOutsideServices;
     @FXML
     private Button addServiceToTableButton;
     @FXML
@@ -49,7 +50,7 @@ public class QuoteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Setting up combo box");
-        comboBoxOutsideServices.getItems().addAll("Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "transportation", "misc");
+        jFXComboBoxOutsideServices.getItems().addAll("Heat Treat", "Grinding", "Plating","Laser","Wielding", "Transportation", "Misc");
         System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
 
@@ -126,7 +127,7 @@ public class QuoteController implements Initializable {
     @FXML
     public void addServiceToTable() {
        try {
-           OutsideService serviceToAdd = new OutsideService(comboBoxOutsideServices.getValue().toString(), listOfQuantities);
+           OutsideService serviceToAdd = new OutsideService(jFXComboBoxOutsideServices.getValue().toString(), listOfQuantities);
            serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
            listOfServices.add(serviceToAdd);
            masterTableView.getItems().add(serviceToAdd);

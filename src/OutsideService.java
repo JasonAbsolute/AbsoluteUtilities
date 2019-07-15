@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class OutsideService {
     private String service;
     private ArrayList amount;
-    private String quantity0;
     private ArrayList<Double> cost = new ArrayList<Double>();
     private int internalCounter;
 
@@ -22,9 +21,6 @@ public class OutsideService {
     }
     public ArrayList getAmount(){
         return amount;
-    }
-    public String getQuantity0(){
-        return quantity0;
     }
 
     public double getNumberToReturn(){
