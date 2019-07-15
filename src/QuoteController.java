@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXTreeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ public class QuoteController implements Initializable {
     private TableView<OutsideService> masterTableView;
     @FXML
     private TextField costPerPartTextBox;
+
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
     // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
@@ -167,9 +169,10 @@ public class QuoteController implements Initializable {
     }
 
     private void setUpTableWithPartAmounts() {
-        masterTableView.getItems().clear();
+        masterTableView.getColumns().clear();
         masterTableView.getColumns().clear();
         Collections.sort(listOfQuantities);
+        System.out.println("Made it here");
         TableColumn<OutsideService, String> serviceColumn = new TableColumn("Service");
         serviceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
         masterTableView.getColumns().add(serviceColumn);
@@ -182,6 +185,9 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void clearTableContents(){
-        masterTableView.getItems().clear();
+        masterTableView.getColumns().clear();
+        listOfServices.clear();
+        listOfQuantities.clear();
+        textListOfQuantity.setText("Parts to be Quoted");
     }
 }

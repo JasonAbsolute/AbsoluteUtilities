@@ -58,9 +58,8 @@
                           </rowConstraints>
                         </GridPane>
                         <TextField fx:id="costPerPartTextBox" layoutX="176.0" layoutY="135.0" promptText="Cost per part" />
-                        <Button layoutX="14.0" layoutY="430.0" mnemonicParsing="false" onAction="#clearTableContents" text="Clear Table Content" />
                         <JFXButton fx:id="addQuantityButton" layoutX="182.0" layoutY="13.0" onAction="#addQuantityToList" ripplerFill="#7c7ced" style="-fx-background-color: #dddddf;" text="Add Quantity" />
-                        <JFXButton layoutX="150.0" layoutY="430.0" onAction="#clearTableContents" ripplerFill="RED" style="-fx-region-border: #c7a8a8; -fx-background-color: #dcc3c3;" text="Clear Table Content" />
+                        <JFXButton layoutX="14.0" layoutY="431.0" onAction="#clearTableContents" ripplerFill="RED" style="-fx-border-color: #c7a8a8; -fx-background-color: #dcc3c3;" text="Clear Table Content" />
                             </children>
                         </AnchorPane>
                     </content>
