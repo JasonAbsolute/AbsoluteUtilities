@@ -10,27 +10,29 @@ public class OutsideService {
     private ArrayList<Double> cost = new ArrayList<Double>();
     private int internalCounter;
 
-    public OutsideService(String service, ArrayList amount){
+    public OutsideService(String service, ArrayList amount) {
         this.service = service;
         this.amount = amount;
         this.internalCounter = 0;
 
     }
-    public String getService(){
+
+    public String getService() {
         return service;
     }
-    public ArrayList getAmount(){
+
+    public ArrayList getAmount() {
         return amount;
     }
 
-    public double getNumberToReturn(){
+    public double getNumberToReturn() {
         System.out.println("NUMBER BEING RETURNED");
         //TODO fic this list problem
         double numToReturn;
-        if(internalCounter == amount.size()-1){
+        if (internalCounter == amount.size() - 1) {
             numToReturn = cost.get(internalCounter);
             internalCounter = 0;
-        }else{
+        } else {
             numToReturn = cost.get(internalCounter);
             internalCounter++;
         }
@@ -38,15 +40,15 @@ public class OutsideService {
     }
 
 
-    public ArrayList<Double> getCost(){
+    public ArrayList<Double> getCost() {
         return cost;
     }
 
-    public String getCost(int i){
+    public String getCost(int i) {
         return Double.toString(cost.get(i));
     }
 
-    public void outsideServiceQoutes(String textBoxOfCosts){
+    public void outsideServiceQoutes(String textBoxOfCosts) {
         String[] result = textBoxOfCosts.split(",");
         for (int i = 0; i < result.length; i++) {
             // Fetch the item, trim it and put it back in
