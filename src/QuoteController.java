@@ -13,10 +13,6 @@ import java.util.ResourceBundle;
 public class QuoteController implements Initializable {
 
     @FXML
-    private TextField materialCostTextField;
-    @FXML
-    private TextField setupCostTextField;
-    @FXML
     private TextField quantityTextField;
     @FXML
     private Text textListOfQuantity;
@@ -43,50 +39,6 @@ public class QuoteController implements Initializable {
         jFXComboBoxOutsideServices.getItems().addAll("Material", "Setup Costs (hours)","Cycle Time (mins)", "Heat Treat", "Grinding", "Plating","Laser","Wielding", "Transportation", "Misc");
         System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
-
-    }
-
-
-    @FXML
-    public void validateMaterialCostTextField() {
-        boolean validInput = isValidInput(materialCostTextField.getText());
-        if (validInput) {
-            System.out.println("Valid input");
-        } else {
-            inputError.setTitle("Input for Material Cost");
-            inputError.setHeaderText("Material Cost Error");
-            inputError.setContentText("Material Cost has an invalid input please make sure only numbers are entered.\n" +
-                    "EX: 100, 200.1 , 1.11");
-            inputError.showAndWait();
-        }
-    }
-
-    @FXML
-    public void validateSetupCostTextField() {
-        boolean validInput = isValidInput(setupCostTextField.getText());
-        if (validInput) {
-            System.out.println("Valid input");
-        } else {
-            inputError.setTitle("Input for Setup Cost");
-            inputError.setHeaderText("Setup Cost Error");
-            inputError.setContentText("Setup Cost has an invalid input please make sure only numbers are entered.\n" +
-                    "EX: 100, 200.1 , 1.11");
-            inputError.showAndWait();
-        }
-    }
-
-    @FXML
-    public void validateCycleTimeTextField() {
-        boolean validInput = isValidInput(setupCostTextField.getText());
-        if (validInput) {
-            System.out.println("Valid input");
-        } else {
-            inputError.setTitle("Input for Cycle Time");
-            inputError.setHeaderText("Cycle Time Error");
-            inputError.setContentText("Cycle Time has an invalid input please make sure only numbers are entered.\n" +
-                    "EX: 100, 200.1 , 1.11");
-            inputError.showAndWait();
-        }
     }
 
     @FXML
@@ -130,8 +82,6 @@ public class QuoteController implements Initializable {
                    "\nMake sure the service has a service and the input is valid");
            inputError.showAndWait();
        }
-
-
     }
 
 
