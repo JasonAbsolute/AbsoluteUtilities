@@ -201,7 +201,7 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void clearTableContents(){
-        masterTableView.getColumns().clear();
+        masterTableView.getItems().clear();
         listOfServices.clear();
         listOfQuantities.clear();
         textListOfQuantity.setText("Parts to be Quoted");

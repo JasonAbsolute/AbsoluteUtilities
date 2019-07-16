@@ -25,6 +25,7 @@ public class OutsideService {
 
     public double getNumberToReturn(){
         System.out.println("NUMBER BEING RETURNED");
+        //TODO fic this list problem
         double numToReturn;
         if(internalCounter == amount.size()-1){
             numToReturn = cost.get(internalCounter);
