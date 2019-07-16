@@ -4,7 +4,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,11 +36,10 @@ public class QuoteController implements Initializable {
     private ArrayList<OutsideService> listOfServices = new ArrayList<>();
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Setting up combo box");
-        jFXComboBoxOutsideServices.getItems().addAll("Material", "Setup Costs (hours)","Cycle Time (mins)", "Heat Treat", "Grinding", "Plating","Laser","Wielding", "Transportation", "Misc");
+        jFXComboBoxOutsideServices.getItems().addAll("Material", "Setup Costs (hours)", "Cycle Time (mins)", "Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "Transportation", "Misc");
         System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
     }
@@ -68,20 +71,20 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void addServiceToTable() {
-       try {
-           OutsideService serviceToAdd = new OutsideService(jFXComboBoxOutsideServices.getValue().toString(), listOfQuantities);
-           serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
-           listOfServices.add(serviceToAdd);
-           masterTableView.getItems().add(serviceToAdd);
-           costPerPartTextBox.clear();
-       } catch (Exception error){
-           System.out.println("There was an error with the adding to table");
-           inputError.setTitle("Input For Service");
-           inputError.setHeaderText("Service Error");
-           inputError.setContentText("The input for Service was not done correctly. " +
-                   "\nMake sure the service has a service and the input is valid");
-           inputError.showAndWait();
-       }
+        try {
+            OutsideService serviceToAdd = new OutsideService(jFXComboBoxOutsideServices.getValue().toString(), listOfQuantities);
+            serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
+            listOfServices.add(serviceToAdd);
+            masterTableView.getItems().add(serviceToAdd);
+            costPerPartTextBox.clear();
+        } catch (Exception error) {
+            System.out.println("There was an error with the adding to table");
+            inputError.setTitle("Input For Service");
+            inputError.setHeaderText("Service Error");
+            inputError.setContentText("The input for Service was not done correctly. " +
+                    "\nMake sure the service has a service and the input is valid");
+            inputError.showAndWait();
+        }
     }
 
 
@@ -140,7 +143,7 @@ public class QuoteController implements Initializable {
     }
 
     @FXML
-    public void clearTableContents(){
+    public void clearTableContents() {
         masterTableView.getItems().clear();
         listOfServices.clear();
         listOfQuantities.clear();
@@ -148,7 +151,28 @@ public class QuoteController implements Initializable {
     }
 
     @FXML
-    public void quoteButtonPressed(){
+    public void quoteButtonPressed() {
+        System.out.print("Service             ");
+        for (int i = 0; i < listOfQuantities.size(); i++) {
+            System.out.print(listOfQuantities.get(i) + "     ");
+        }
+        System.out.println("");
+        for (int j = 0; j < listOfServices.size(); j++) {
+            System.out.print(listOfServices.get(j).getService() + " ");
+            for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
+                System.out.print(listOfServices.get(j).getCost().get(k) + "     ");
+            }
+            System.out.println("");
+        }
+        try {
+            File outputFile = new File("TestFile.txt");
+            FileWriter fileWriter = new FileWriter("TestFile.txt");
+            for (int i = 0; i < listOfQuantities.size(); i++) {
+                fileWriter.write(listOfQuantities.get(i) + "     ");
+            }
+            fileWriter.close();
+        } catch (IOException error) {
 
+        }
     }
 }
