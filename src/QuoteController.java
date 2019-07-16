@@ -1,17 +1,12 @@
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTreeTableView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -40,17 +35,12 @@ public class QuoteController implements Initializable {
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
     private ArrayList<OutsideService> listOfServices = new ArrayList<>();
 
-    //Three text fields that will be saved as variables
-    private double materialCost;
-    private double settingUpCost;
-    private double cycleTimeCost;
-
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Setting up combo box");
-        jFXComboBoxOutsideServices.getItems().addAll("Heat Treat", "Grinding", "Plating","Laser","Wielding", "Transportation", "Misc");
+        jFXComboBoxOutsideServices.getItems().addAll("Material", "Setup Costs (hours)","Cycle Time (mins)", "Heat Treat", "Grinding", "Plating","Laser","Wielding", "Transportation", "Misc");
         System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
 
@@ -205,5 +195,10 @@ public class QuoteController implements Initializable {
         listOfServices.clear();
         listOfQuantities.clear();
         textListOfQuantity.setText("Parts to be Quoted");
+    }
+
+    @FXML
+    public void quoteButtonPressed(){
+
     }
 }
