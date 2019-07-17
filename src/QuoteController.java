@@ -4,13 +4,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -26,7 +24,7 @@ public class QuoteController implements Initializable {
     @FXML
     private Button addServiceToTableButton;
     @FXML
-    private TableView<OutsideService> masterTableView;
+    private TableView<GeneralServices> masterTableView;
     @FXML
     private TextField costPerPartTextBox;
 
@@ -34,7 +32,7 @@ public class QuoteController implements Initializable {
     private ArrayList<Integer> listOfQuantities = new ArrayList();
     // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
-    private ArrayList<OutsideService> listOfServices = new ArrayList<>();
+    private ArrayList<GeneralServices> listOfServices = new ArrayList<>();
 
 
     @Override
@@ -73,7 +71,7 @@ public class QuoteController implements Initializable {
     @FXML
     public void addServiceToTable() {
         try {
-            OutsideService serviceToAdd = new OutsideService(jFXComboBoxOutsideServices.getValue().toString(), listOfQuantities);
+            GeneralServices serviceToAdd = new GeneralServices(jFXComboBoxOutsideServices.getValue().toString(), listOfQuantities);
             serviceToAdd.outsideServiceQoutes(costPerPartTextBox.getText());
             listOfServices.add(serviceToAdd);
             masterTableView.getItems().add(serviceToAdd);
@@ -133,7 +131,7 @@ public class QuoteController implements Initializable {
         masterTableView.getColumns().clear();
         Collections.sort(listOfQuantities);
         System.out.println("Made it here");
-        TableColumn<OutsideService, String> serviceColumn = new TableColumn("Service");
+        TableColumn<GeneralServices, String> serviceColumn = new TableColumn("Service");
         serviceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
         masterTableView.getColumns().add(serviceColumn);
         for (int i = 0; i < listOfQuantities.size(); i++) {

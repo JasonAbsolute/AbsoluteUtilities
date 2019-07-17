@@ -5,14 +5,14 @@ import java.util.ArrayList;
  * this will help with adding the out side services like:
  * heat treat, grinding, wielding, laser, plating, misc/oddballs
  */
-public class OutsideService {
+public class GeneralServices {
     private String service;
     private ArrayList amount;
     private ArrayList<Double> cost = new ArrayList<Double>();
     private int internalCounter;
 
 
-    public OutsideService(String service, ArrayList amount) {
+    public GeneralServices(String service, ArrayList amount) {
         this.service = service;
         this.amount = amount;
         this.internalCounter = 0;
