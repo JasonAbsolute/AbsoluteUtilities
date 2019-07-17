@@ -1,5 +1,4 @@
-Cost of 300 Parts     Cost of 400 Parts     Cost of 500 Parts     
-Material 5.5     5.3     5.0     
-Setup Costs (hours) 6.4     5.23     3.12     
-Cycle Time (mins) 5.0     4.0     3.0     
-Plating 87.0     76.0     54.0     
+Cost of 30 Parts     Cost of 50 Parts     Cost of 75 Parts     
+Material      4.50     4.25     3.90
+Setup Costs (hours)      4.31     4.00     2.90
+Cycle Time (mins)      6.60     6.30     6.10

@@ -176,7 +176,7 @@ public class QuoteController implements Initializable {
             for (int j = 0; j < listOfServices.size(); j++) {
                 fileWriter.write(listOfServices.get(j).getService() + " ");
                 for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
-                    fileWriter.write(String.format(listOfServices.get(j).getCost().get(k) + "     "));
+                    fileWriter.write("     " + String.format("%.2f",listOfServices.get(j).getCost().get(k)));
                 }
                 fileWriter.write("\n");
             }
