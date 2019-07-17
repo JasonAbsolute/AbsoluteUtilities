@@ -1,5 +1,6 @@
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,8 +12,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class QuoteController implements Initializable {
@@ -155,41 +158,67 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void quoteButtonPressed() {
-        System.out.print("Service             ");
-        for (int i = 0; i < listOfQuantities.size(); i++) {
-            System.out.print(listOfQuantities.get(i) + "     ");
-        }
-        System.out.println("");
-        for (int j = 0; j < listOfServices.size(); j++) {
-            System.out.print(listOfServices.get(j).getService() + " ");
-            for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
-                System.out.print(listOfServices.get(j).getCost().get(k) + "     ");
-            }
-            System.out.println("");
-        }
+        printQouteToConsole();
         try {
             File outputFile = new File("TestFile.txt");
             FileWriter fileWriter = new FileWriter("TestFile.txt");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
+            fileWriter.write("Date Quoted: " + formatter.format(date) + "\n");
+            fileWriter.write("Service                ");
             for (int i = 0; i < listOfQuantities.size(); i++) {
-                fileWriter.write("Cost of " + listOfQuantities.get(i) + " Parts     ");
-
+                fileWriter.write("Cost Of " + listOfQuantities.get(i) + "     ");
             }
             fileWriter.write("\n");
             for (int j = 0; j < listOfServices.size(); j++) {
                 fileWriter.write(listOfServices.get(j).getService() + " ");
+                for (int charCount = 25; charCount > listOfServices.get(j).getService().length(); charCount--) {
+                    fileWriter.write(" ");
+                }
                 for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
-                    fileWriter.write("     " + String.format("%.2f",listOfServices.get(j).getCost().get(k)));
+                    fileWriter.write("" + String.format("%.2f",listOfServices.get(j).getCost().get(k)));
+                    for (int charCount = 16; charCount > listOfServices.get(j).getCost(k).length(); charCount--) {
+                        fileWriter.write(" ");
+                    }
                 }
                 fileWriter.write("\n");
             }
             fileWriter.close();
         } catch (IOException error) {
-
+            System.out.println("Somthing went wrong wirting the quote out");
         }
     }
+
     @FXML
-    public void loadDialogForServices(){
-        JFXDialog jfxDialog = new JFXDialog(stackPane, new Label("Hello!"), JFXDialog.DialogTransition.CENTER);
+    public void loadDialogForServices() {
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Services"));
+        content.setBody(new Text("This is where all the serives will go in the format of " +
+                "xxx.xx , xxx.xx there must be the amount of entrys as there are quotes for parts"));
+
+
+        JFXDialog jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
         jfxDialog.show();
+    }
+
+    private void printQouteToConsole(){
+        System.out.print("Service                ");
+        for (int i = 0; i < listOfQuantities.size(); i++) {
+            System.out.print("Cost Of " + listOfQuantities.get(i) + "     ");
+        }
+        System.out.println("");
+        for (int j = 0; j < listOfServices.size(); j++) {
+            System.out.print(listOfServices.get(j).getService() + " ");
+            for (int charCount = 25; charCount > listOfServices.get(j).getService().length(); charCount--) {
+                System.out.print(" ");
+            }
+            for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
+                System.out.print(listOfServices.get(j).getCost().get(k));
+                for (int charCount = 16; charCount > listOfServices.get(j).getCost(k).length(); charCount--) {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println("");
+        }
     }
 }
