@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +10,7 @@ public class OutsideService {
     private ArrayList amount;
     private ArrayList<Double> cost = new ArrayList<Double>();
     private int internalCounter;
+
 
     public OutsideService(String service, ArrayList amount) {
         this.service = service;
@@ -25,7 +27,7 @@ public class OutsideService {
         return amount;
     }
 
-    public double getNumberToReturn() {
+    public String getNumberToReturn() {
         System.out.println("NUMBER BEING RETURNED");
         //TODO fic this list problem
         double numToReturn;
@@ -36,7 +38,7 @@ public class OutsideService {
             numToReturn = cost.get(internalCounter);
             internalCounter++;
         }
-        return numToReturn;
+        return String.format("%.2f",numToReturn);
     }
 
 

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -168,7 +169,16 @@ public class QuoteController implements Initializable {
             File outputFile = new File("TestFile.txt");
             FileWriter fileWriter = new FileWriter("TestFile.txt");
             for (int i = 0; i < listOfQuantities.size(); i++) {
-                fileWriter.write(listOfQuantities.get(i) + "     ");
+                fileWriter.write("Cost of " + listOfQuantities.get(i) + " Parts     ");
+
+            }
+            fileWriter.write("\n");
+            for (int j = 0; j < listOfServices.size(); j++) {
+                fileWriter.write(listOfServices.get(j).getService() + " ");
+                for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
+                    fileWriter.write(String.format(listOfServices.get(j).getCost().get(k) + "     "));
+                }
+                fileWriter.write("\n");
             }
             fileWriter.close();
         } catch (IOException error) {
