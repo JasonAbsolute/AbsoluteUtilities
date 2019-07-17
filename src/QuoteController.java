@@ -1,8 +1,10 @@
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -27,6 +29,8 @@ public class QuoteController implements Initializable {
     private TableView<GeneralServices> masterTableView;
     @FXML
     private TextField costPerPartTextBox;
+    @FXML
+    private StackPane stackPane;
 
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
@@ -182,5 +186,10 @@ public class QuoteController implements Initializable {
         } catch (IOException error) {
 
         }
+    }
+    @FXML
+    public void loadDialogForServices(){
+        JFXDialog jfxDialog = new JFXDialog(stackPane, new Label("Hello!"), JFXDialog.DialogTransition.CENTER);
+        jfxDialog.show();
     }
 }

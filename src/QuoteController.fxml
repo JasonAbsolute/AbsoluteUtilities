@@ -10,16 +10,16 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="645.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="QuoteController">
+<VBox prefHeight="645.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuoteController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
-                <Menu mnemonicParsing="false" text="File"/>
+                <Menu mnemonicParsing="false" text="File" />
             </menus>
         </MenuBar>
         <TabPane prefHeight="475.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
@@ -28,39 +28,29 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="quantityTextField" layoutX="14.0" layoutY="14.0"
-                                           onAction="#addQuantityToList" promptText="Quantity of Part"/>
-                                <Text fx:id="textListOfQuantity" layoutX="281.0" layoutY="31.0" strokeType="OUTSIDE"
-                                      strokeWidth="0.0" text="Parts to be Quoted: "/>
-                                <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="Services:" underline="true">
+                                <TextField fx:id="quantityTextField" layoutX="14.0" layoutY="14.0" onAction="#addQuantityToList" promptText="Quantity of Part" />
+                                <Text fx:id="textListOfQuantity" layoutX="281.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts to be Quoted: " />
+                                <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Services:" underline="true">
                                     <font>
-                                        <Font size="18.0"/>
+                                        <Font size="18.0" />
                                     </font>
                                 </Text>
-                                <TableView fx:id="masterTableView" editable="true" layoutX="14.0" layoutY="117.0"
-                                           prefHeight="250.0" prefWidth="743.0">
+                                <TableView fx:id="masterTableView" editable="true" layoutX="14.0" layoutY="117.0" prefHeight="250.0" prefWidth="743.0">
                                     <columns>
-                                        <TableColumn prefWidth="75.0" text="Service"/>
+                                        <TableColumn prefWidth="75.0" text="Service" />
                                     </columns>
                                 </TableView>
-                                <TextField fx:id="costPerPartTextBox" layoutX="174.0" layoutY="81.0"
-                                           promptText="Cost per part"/>
-                                <JFXButton fx:id="addQuantityButton" layoutX="182.0" layoutY="13.0"
-                                           onAction="#addQuantityToList" ripplerFill="#7c7ced"
-                                           style="-fx-background-color: #dddddf;" text="Add Quantity"/>
-                                <JFXButton layoutX="13.0" layoutY="381.0" onAction="#clearTableContents"
-                                           ripplerFill="RED"
-                                           style="-fx-border-color: #c7a8a8; -fx-background-color: #dcc3c3;"
-                                           text="Clear Table Content"/>
-                                <JFXButton fx:id="addServiceToTableButton" layoutX="346.0" layoutY="81.0"
-                                           onAction="#addServiceToTable" ripplerFill="#ffe800"
-                                           style="-fx-background-color: #dddddf;" text="Add Service"/>
-                                <JFXComboBox fx:id="jFXComboBoxOutsideServices" layoutX="13.0" layoutY="81.0"
-                                             prefHeight="26.0" prefWidth="150.0" promptText="Select a Service"/>
-                                <JFXButton fx:id="quoteButton" buttonType="RAISED" layoutX="683.0" layoutY="377.0"
-                                           onAction="#quoteButtonPressed" prefHeight="35.0" prefWidth="73.0"
-                                           ripplerFill="#45ff11" style="-fx-background-color: #dddddf;" text="Quote"/>
+                                <TextField fx:id="costPerPartTextBox" layoutX="174.0" layoutY="81.0" promptText="Cost per part" />
+                                <JFXButton fx:id="addQuantityButton" layoutX="182.0" layoutY="13.0" onAction="#addQuantityToList" ripplerFill="#7c7ced" style="-fx-background-color: #dddddf;" text="Add Quantity" />
+                                <JFXButton layoutX="13.0" layoutY="381.0" onAction="#clearTableContents" ripplerFill="RED" style="-fx-border-color: #c7a8a8; -fx-background-color: #dcc3c3;" text="Clear Table Content" />
+                                <JFXButton fx:id="addServiceToTableButton" layoutX="346.0" layoutY="81.0" onAction="#addServiceToTable" ripplerFill="#ffe800" style="-fx-background-color: #dddddf;" text="Add Service" />
+                                <JFXComboBox fx:id="jFXComboBoxOutsideServices" layoutX="13.0" layoutY="81.0" prefHeight="26.0" prefWidth="150.0" promptText="Select a Service" />
+                                <JFXButton fx:id="quoteButton" buttonType="RAISED" layoutX="683.0" layoutY="377.0" onAction="#quoteButtonPressed" prefHeight="35.0" prefWidth="73.0" ripplerFill="#45ff11" style="-fx-background-color: #dddddf;" text="Quote" />
+                        <StackPane fx:id="stackPane" layoutX="107.0" layoutY="41.0" prefHeight="37.0" prefWidth="96.0">
+                           <children>
+                              <JFXButton onAction="#loadDialogForServices" prefHeight="36.0" prefWidth="114.0" text="Services:" />
+                           </children>
+                        </StackPane>
                             </children>
                         </AnchorPane>
                     </content>
