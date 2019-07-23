@@ -158,11 +158,12 @@ public class QuoteController implements Initializable {
 
     @FXML
     public void quoteButtonPressed() {
+        double totalCostOfPart = 0;
         printQouteToConsole();
         try {
             File outputFile = new File("TestFile.txt");
             FileWriter fileWriter = new FileWriter("TestFile.txt");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
             fileWriter.write("Date Quoted: " + formatter.format(date) + "\n");
             fileWriter.write("Service                ");
@@ -176,16 +177,32 @@ public class QuoteController implements Initializable {
                     fileWriter.write(" ");
                 }
                 for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
-                    fileWriter.write("" + String.format("%.2f",listOfServices.get(j).getCost().get(k)));
+                    fileWriter.write("" + String.format("%.2f", listOfServices.get(j).getCost().get(k)));
                     for (int charCount = 16; charCount > listOfServices.get(j).getCost(k).length(); charCount--) {
                         fileWriter.write(" ");
                     }
                 }
                 fileWriter.write("\n");
             }
+
+            fileWriter.write("Total Cost                ");
+            for (int i = 0; i < listOfQuantities.size(); i++) {
+                for (int j = 0; j < listOfServices.size(); j++) {
+                    double costOfPart = Double.parseDouble(listOfServices.get(j).getCost(i));
+                    totalCostOfPart += costOfPart;
+                }
+                fileWriter.write("" + String.format("%.2f", totalCostOfPart));
+                String costOfPartLength = Double.toString(totalCostOfPart);
+                for (int k = 0; k < listOfServices.get(i).getCost().size(); k++) {
+                    for (int charCount = 8; charCount > costOfPartLength.length(); charCount--) {
+                        fileWriter.write(" ");
+                    }
+                }
+                totalCostOfPart = 0;
+            }
             fileWriter.close();
         } catch (IOException error) {
-            System.out.println("Somthing went wrong wirting the quote out");
+            System.out.println("Something went wrong when writing the quote out");
         }
     }
 
@@ -201,7 +218,7 @@ public class QuoteController implements Initializable {
         jfxDialog.show();
     }
 
-    private void printQouteToConsole(){
+    private void printQouteToConsole() {
         System.out.print("Service                ");
         for (int i = 0; i < listOfQuantities.size(); i++) {
             System.out.print("Cost Of " + listOfQuantities.get(i) + "     ");
