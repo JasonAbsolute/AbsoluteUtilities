@@ -46,7 +46,7 @@
                                 <JFXButton fx:id="addServiceToTableButton" layoutX="346.0" layoutY="81.0" onAction="#addServiceToTable" ripplerFill="#ffe800" style="-fx-background-color: #dddddf;" text="Add Service" />
                                 <JFXComboBox fx:id="jFXComboBoxOutsideServices" layoutX="13.0" layoutY="81.0" prefHeight="26.0" prefWidth="150.0" promptText="Select a Service" />
                                 <JFXButton fx:id="quoteButton" buttonType="RAISED" layoutX="683.0" layoutY="377.0" onAction="#quoteButtonPressed" prefHeight="35.0" prefWidth="73.0" ripplerFill="#45ff11" style="-fx-background-color: #dddddf;" text="Quote" />
-                        <TextField layoutX="497.0" layoutY="81.0" promptText="Quote for..." />
+                        <TextField fx:id="quoteForCompany" layoutX="497.0" layoutY="81.0" onKeyReleased="#saveCompanyName" promptText="Quote for..." />
                         <StackPane fx:id="stackPane" layoutX="107.0" layoutY="41.0" prefHeight="37.0" prefWidth="96.0">
                            <children>
                               <JFXButton onAction="#loadDialogForServices" prefHeight="36.0" prefWidth="114.0" text="Services:" />

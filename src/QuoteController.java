@@ -34,12 +34,15 @@ public class QuoteController implements Initializable {
     private TextField costPerPartTextBox;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private TextField quoteForCompany;
 
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
     // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
     private ArrayList<GeneralServices> listOfServices = new ArrayList<>();
+    private String companyName;
 
 
     @Override
@@ -161,8 +164,18 @@ public class QuoteController implements Initializable {
         double totalCostOfPart = 0;
         printQouteToConsole();
         try {
-            File outputFile = new File("TestFile.txt");
-            FileWriter fileWriter = new FileWriter("TestFile.txt");
+            FileWriter fileWriter;
+            if (companyName == null) {
+                inputError.setTitle("Input For Company Name");
+                inputError.setHeaderText("Nameing file");
+                inputError.setContentText("The file was not specifed a name/company it was \n saved as NoCompanyNamed.txt");
+                inputError.showAndWait();
+                fileWriter = new FileWriter("NoCompanyNamed.txt");
+                fileWriter.write("Quote For: no name was given\n");
+            } else {
+                fileWriter = new FileWriter(companyName + ".txt");
+                fileWriter.write("Quote For: " + companyName + "\n");
+            }
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
             fileWriter.write("Date Quoted: " + formatter.format(date) + "\n");
@@ -217,6 +230,7 @@ public class QuoteController implements Initializable {
     }
 
     private void printQouteToConsole() {
+        System.out.println(companyName);
         System.out.print("Service                ");
         for (int i = 0; i < listOfQuantities.size(); i++) {
             System.out.print("Cost Of " + listOfQuantities.get(i) + "     ");
@@ -235,5 +249,10 @@ public class QuoteController implements Initializable {
             }
             System.out.println("");
         }
+    }
+
+    @FXML
+    public void saveCompanyName() {
+        companyName = quoteForCompany.getText();
     }
 }
