@@ -185,16 +185,18 @@ public class QuoteController implements Initializable {
                 fileWriter.write("\n");
             }
 
-            fileWriter.write("Total Cost                ");
+            fileWriter.write("Total Cost ");
             for (int i = 0; i < listOfQuantities.size(); i++) {
+                for (int charCount = 25; charCount > "Total Cost".length(); charCount--) {
+                    fileWriter.write(" ");
+                }
                 for (int j = 0; j < listOfServices.size(); j++) {
                     double costOfPart = Double.parseDouble(listOfServices.get(j).getCost(i));
                     totalCostOfPart += costOfPart;
                 }
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
-                String costOfPartLength = Double.toString(totalCostOfPart);
                 for (int k = 0; k < listOfServices.get(i).getCost().size(); k++) {
-                    for (int charCount = 8; charCount > costOfPartLength.length(); charCount--) {
+                    for (int charCount = 8; charCount > Double.toString(totalCostOfPart).length(); charCount--) {
                         fileWriter.write(" ");
                     }
                 }
