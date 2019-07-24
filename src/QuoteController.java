@@ -48,7 +48,7 @@ public class QuoteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Setting up combo box");
-        jFXComboBoxOutsideServices.getItems().addAll("Material", "Setup Costs (hours)", "Cycle Time (mins)", "Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "Transportation", "Misc");
+        jFXComboBoxOutsideServices.getItems().addAll("Material", "Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "Transportation", "Misc");
         System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
     }
@@ -254,5 +254,10 @@ public class QuoteController implements Initializable {
     @FXML
     public void saveCompanyName() {
         companyName = quoteForCompany.getText();
+    }
+
+    @FXML
+    public void stopProgram(){
+        System.exit(0);
     }
 }
