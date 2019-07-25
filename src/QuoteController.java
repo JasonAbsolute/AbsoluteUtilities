@@ -8,7 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +35,12 @@ public class QuoteController implements Initializable {
     private StackPane stackPane;
     @FXML
     private TextField quoteForCompany;
+    @FXML
+    private TextField rateTextField;
+    @FXML
+    private TextField setUpTextField;
+    @FXML
+    private TextField cycleTextField;
 
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
@@ -43,6 +48,10 @@ public class QuoteController implements Initializable {
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
     private ArrayList<GeneralServices> listOfServices = new ArrayList<>();
     private String companyName;
+    private double rate;
+    private double setup;
+    private double cycle;
+    private double multiplier;
 
 
     @Override
@@ -183,7 +192,13 @@ public class QuoteController implements Initializable {
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 fileWriter.write("Cost Of " + listOfQuantities.get(i) + "     ");
             }
+
+
             fileWriter.write("\n");
+
+            writeTheSetUpAndCycleCost(fileWriter);
+
+
             for (int j = 0; j < listOfServices.size(); j++) {
                 fileWriter.write(listOfServices.get(j).getService() + " ");
                 for (int charCount = 25; charCount > listOfServices.get(j).getService().length(); charCount--) {
@@ -257,7 +272,75 @@ public class QuoteController implements Initializable {
     }
 
     @FXML
-    public void stopProgram(){
+    public void stopProgram() {
         System.exit(0);
     }
+
+    @FXML
+    public void addRate() {
+        if (isValidInput(rateTextField.getText())) {
+            rate = Double.parseDouble((rateTextField.getText()));
+            System.out.println("Rate was set at: " + rate);
+        } else {
+            inputError.setTitle("Input For Rate");
+            inputError.setHeaderText("Rate Error");
+            inputError.setContentText("The input for Rate was not done correctly. " +
+                    "\nMake sure the Rate is correct");
+            inputError.showAndWait();
+        }
+    }
+
+    @FXML
+    public void setSetup() {
+        if (isValidInput(setUpTextField.getText())) {
+            setup = Double.parseDouble((setUpTextField.getText()));
+            System.out.println("Setup(Hours) was setup");
+        } else {
+            inputError.setTitle("Input For Setup");
+            inputError.setHeaderText("Rate Error");
+            inputError.setContentText("The input for Rate was not done correctly. " +
+                    "\nMake sure the Rate is correct");
+            inputError.showAndWait();
+        }
+    }
+
+    @FXML
+    public void setCycle() {
+        if (isValidInput(cycleTextField.getText())) {
+            cycle = Double.parseDouble((cycleTextField.getText()));
+            System.out.println("Cycle(Minutes) was setup");
+        } else {
+            inputError.setTitle("Input For Setup");
+            inputError.setHeaderText("Rate Error");
+            inputError.setContentText("The input for Rate was not done correctly. " +
+                    "\nMake sure the Rate is correct");
+            inputError.showAndWait();
+        }
+    }
+
+    @FXML
+    public void setCycleAndSetup() {
+        setCycle();
+        setSetup();
+        System.out.println("Both Cycle and Setup were set up");
+    }
+
+    private void writeTheSetUpAndCycleCost(FileWriter fileWriter) {
+        try {
+            fileWriter.write("Setup (Hours)");
+            int setupLength = "Setup (Hours)".length();
+            for (int charCount = 26; charCount > setupLength; charCount--) {
+                fileWriter.write(" ");
+            }
+            for (int i = 0; i < listOfQuantities.size(); i++) {
+                double partAmount = listOfQuantities.get(i);
+                fileWriter.write(String.format("%.2f", ((rate * setup) / partAmount)));
+                fileWriter.write("           ");
+            }
+            fileWriter.write("\n");
+        } catch (Exception error) {
+
+        }
+    }
+
 }
