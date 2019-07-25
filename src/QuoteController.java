@@ -223,7 +223,7 @@ public class QuoteController implements Initializable {
                     totalCostOfPart += costOfPart;
                 }
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
-                fileWriter.write("           ");
+                fileWriter.write("            ");
                 totalCostOfPart = 0;
             }
             fileWriter.close();
@@ -327,15 +327,26 @@ public class QuoteController implements Initializable {
 
     private void writeTheSetUpAndCycleCost(FileWriter fileWriter) {
         try {
-            fileWriter.write("Setup (Hours)");
+            fileWriter.write("Setup (Hours) ");
             int setupLength = "Setup (Hours)".length();
-            for (int charCount = 26; charCount > setupLength; charCount--) {
+            for (int charCount = 25; charCount > setupLength; charCount--) {
                 fileWriter.write(" ");
             }
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 double partAmount = listOfQuantities.get(i);
                 fileWriter.write(String.format("%.2f", ((rate * setup) / partAmount)));
-                fileWriter.write("           ");
+                fileWriter.write("            ");
+            }
+            fileWriter.write("\n");
+            fileWriter.write("Cycle (Minutes) ");
+            int cycleLength = "Cycle (Minutes)".length();
+            for (int charCount = 25; charCount > cycleLength; charCount--) {
+                fileWriter.write(" ");
+            }
+            for (int i = 0; i < listOfQuantities.size(); i++) {
+                double partAmount = listOfQuantities.get(i);
+                fileWriter.write(String.format("%.2f", (rate/60*cycle)));
+                fileWriter.write("            ");
             }
             fileWriter.write("\n");
         } catch (Exception error) {
