@@ -50,7 +50,7 @@
                                 <JFXButton fx:id="addServiceToTableButton" layoutX="348.0" layoutY="174.0" onAction="#addServiceToTable" ripplerFill="#ffe800" style="-fx-background-color: #dddddf;" text="Add Service" />
                                 <JFXComboBox fx:id="jFXComboBoxOutsideServices" layoutX="15.0" layoutY="174.0" prefHeight="26.0" prefWidth="150.0" promptText="Select a Service" />
                                 <JFXButton fx:id="quoteButton" buttonType="RAISED" layoutX="685.0" layoutY="470.0" onAction="#quoteButtonPressed" prefHeight="35.0" prefWidth="73.0" ripplerFill="#45ff11" style="-fx-background-color: #dddddf;" text="Quote" />
-                        <TextField layoutX="16.0" layoutY="121.0" onKeyReleased="#saveCompanyName" promptText="Quote for..." />
+                        <TextField fx:id="quoteForCompany" layoutX="16.0" layoutY="121.0" onKeyReleased="#saveCompanyName" promptText="Quote for..." />
                         <JFXButton fx:id="addNameButton" layoutX="186.0" layoutY="121.0" onAction="#saveCompanyName" prefHeight="26.0" prefWidth="88.0" ripplerFill="#7c7ced" style="-fx-background-color: #dddddf;" text="Add Name" />
                         <TextField layoutX="16.0" layoutY="475.0" promptText="Multiplier (percent)" />
                         <JFXButton fx:id="addNameButton1" layoutX="182.0" layoutY="474.0" onAction="#saveCompanyName" prefHeight="26.0" prefWidth="107.0" ripplerFill="#7c7ced" style="-fx-background-color: #dddddf;" text="Add Multiplier" />

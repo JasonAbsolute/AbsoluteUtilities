@@ -16,7 +16,6 @@ public class GeneralServices {
         this.service = service;
         this.amount = amount;
         this.internalCounter = 0;
-
     }
 
     public String getService() {

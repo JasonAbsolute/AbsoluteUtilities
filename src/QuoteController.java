@@ -1,11 +1,8 @@
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.FileWriter;
@@ -32,8 +29,6 @@ public class QuoteController implements Initializable {
     @FXML
     private TextField costPerPartTextBox;
     @FXML
-    private StackPane stackPane;
-    @FXML
     private TextField quoteForCompany;
     @FXML
     private TextField rateTextField;
@@ -47,6 +42,8 @@ public class QuoteController implements Initializable {
     // private StringBuilder sb = new StringBuilder("Parts to be Quoted: ");
     private Alert inputError = new Alert(Alert.AlertType.ERROR);
     private ArrayList<GeneralServices> listOfServices = new ArrayList<>();
+    private ArrayList<Double> cycleCostList = new ArrayList<>();
+    private ArrayList<Double> setupCostList = new ArrayList<>();
     private String companyName;
     private double rate;
     private double setup;
@@ -222,6 +219,8 @@ public class QuoteController implements Initializable {
                     double costOfPart = Double.parseDouble(listOfServices.get(j).getCost(i));
                     totalCostOfPart += costOfPart;
                 }
+                totalCostOfPart += cycleCostList.get(i);
+                totalCostOfPart += setupCostList.get(i);
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
                 fileWriter.write("            ");
                 totalCostOfPart = 0;
@@ -230,18 +229,6 @@ public class QuoteController implements Initializable {
         } catch (IOException error) {
             System.out.println("Something went wrong when writing the quote out");
         }
-    }
-
-    @FXML
-    public void loadDialogForServices() {
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Services"));
-        content.setBody(new Text("This is where all the serives will go in the format of " +
-                "xxx.xx , xxx.xx there must be the amount of entrys as there are quotes for parts"));
-
-
-        JFXDialog jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-        jfxDialog.show();
     }
 
     private void printQouteToConsole() {
@@ -334,8 +321,10 @@ public class QuoteController implements Initializable {
             }
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 double partAmount = listOfQuantities.get(i);
-                fileWriter.write(String.format("%.2f", ((rate * setup) / partAmount)));
+                double cost = (rate * setup) / partAmount;
+                fileWriter.write(String.format("%.2f", cost));
                 fileWriter.write("            ");
+                setupCostList.add(i, cost);
             }
             fileWriter.write("\n");
             fileWriter.write("Cycle (Minutes) ");
@@ -345,8 +334,9 @@ public class QuoteController implements Initializable {
             }
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 double partAmount = listOfQuantities.get(i);
-                fileWriter.write(String.format("%.2f", (rate/60*cycle)));
+                fileWriter.write(String.format("%.2f", (rate / 60 * cycle)));
                 fileWriter.write("            ");
+                cycleCostList.add((rate / 60 * cycle));
             }
             fileWriter.write("\n");
         } catch (Exception error) {
