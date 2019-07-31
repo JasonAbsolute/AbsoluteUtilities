@@ -207,7 +207,9 @@ public class QuoteController implements Initializable {
                 }
                 for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
                     fileWriter.write("" + String.format("%.2f", listOfServices.get(j).getCost().get(k)));
-                    for (int charCount = 16; charCount > listOfServices.get(j).getCost(k).length(); charCount--) {
+                    String costLengthFormated = decimalFormat.format(listOfServices.get(j).getCost().get(k));
+                    System.out.println(costLengthFormated + "    " + costLengthFormated.length());
+                    for (int charCount = 16; charCount > costLengthFormated.length(); charCount--) {
                         fileWriter.write(" ");
                     }
                 }
@@ -227,7 +229,7 @@ public class QuoteController implements Initializable {
                 totalCostOfPart += setupCostList.get(i);
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
                 String lengthForFormat = decimalFormat.format(totalCostOfPart);
-                for(int j = 16; j > lengthForFormat.length(); j--){
+                for (int j = 16; j > lengthForFormat.length(); j--) {
                     fileWriter.write(" ");
                 }
                 totalCostOfPart = 0;
@@ -244,11 +246,11 @@ public class QuoteController implements Initializable {
                 }
                 totalCostOfPart += cycleCostList.get(i);
                 totalCostOfPart += setupCostList.get(i);
-                totalCostOfPart = ((multiplier/100)+1) * totalCostOfPart;
+                totalCostOfPart = ((multiplier / 100) + 1) * totalCostOfPart;
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
                 String lengthForFormatMulti = decimalFormat.format(totalCostOfPart);
                 System.out.println(lengthForFormatMulti + "  " + lengthForFormatMulti.length());
-                for(int j = 16; j > lengthForFormatMulti.length(); j--){
+                for (int j = 16; j > lengthForFormatMulti.length(); j--) {
                     fileWriter.write(" ");
                 }
                 totalCostOfPart = 0;
@@ -348,6 +350,7 @@ public class QuoteController implements Initializable {
     }
 
     private void writeTheSetUpAndCycleCost(FileWriter fileWriter) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
         try {
             fileWriter.write("Setup (Hours) ");
             int setupLength = "Setup (Hours)".length();
@@ -358,7 +361,10 @@ public class QuoteController implements Initializable {
                 double partAmount = listOfQuantities.get(i);
                 double cost = (rate * setup) / partAmount;
                 fileWriter.write(String.format("%.2f", cost));
-                fileWriter.write("            ");
+                String lengthForFormat = decimalFormat.format(cost);
+                for (int j = 16; j > lengthForFormat.length(); j--) {
+                    fileWriter.write(" ");
+                }
                 setupCostList.add(i, cost);
             }
             fileWriter.write("\n");
@@ -370,7 +376,10 @@ public class QuoteController implements Initializable {
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 double partAmount = listOfQuantities.get(i);
                 fileWriter.write(String.format("%.2f", (rate / 60 * cycle)));
-                fileWriter.write("            ");
+                String lengthForFormat = decimalFormat.format((rate / 60 * cycle));
+                for(int j = 16; j > lengthForFormat.length(); j--){
+                    fileWriter.write(" ");
+                }
                 cycleCostList.add((rate / 60 * cycle));
             }
             fileWriter.write("\n");

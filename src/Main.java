@@ -19,7 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("Absolute Utilities");
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(
-                new Image( Main.class.getResourceAsStream("AbsoluteUtilitiesLogo.PNG")));
+                new Image( Main.class.getResourceAsStream("img/AbsoluteUtilitiesLogo.PNG")));
         primaryStage.show();
     }
 
