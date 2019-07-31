@@ -1,0 +1,10 @@
+Quote For: AbsoluteTurnPart#00-00-01
+Date Quoted: 2019-07-31 at 13:01:40
+Service                Cost Of 50     Cost Of 100     Cost Of 200     
+Setup (Hours)             12.00           6.00            3.00            
+Cycle (Minutes)           2.50            2.50            2.50            
+Material                  1.34            1.20            1.11            
+Heat Treat                5.87            3.23            2.22            
+Grinding                  6.66            5.53            4.75            
+Total Cost                28.37           18.46           13.58           
+Multiplier Total          34.04           22.15           16.30           
