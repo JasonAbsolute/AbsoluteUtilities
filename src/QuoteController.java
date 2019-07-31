@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,8 @@ public class QuoteController implements Initializable {
     private TextField setUpTextField;
     @FXML
     private TextField cycleTextField;
+    @FXML
+    private TextField multiplierTextField;
 
 
     private ArrayList<Integer> listOfQuantities = new ArrayList();
@@ -168,6 +171,7 @@ public class QuoteController implements Initializable {
     @FXML
     public void quoteButtonPressed() {
         double totalCostOfPart = 0;
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
         printQouteToConsole();
         try {
             FileWriter fileWriter;
@@ -222,9 +226,35 @@ public class QuoteController implements Initializable {
                 totalCostOfPart += cycleCostList.get(i);
                 totalCostOfPart += setupCostList.get(i);
                 fileWriter.write("" + String.format("%.2f", totalCostOfPart));
-                fileWriter.write("            ");
+                String lengthForFormat = decimalFormat.format(totalCostOfPart);
+                for(int j = 16; j > lengthForFormat.length(); j--){
+                    fileWriter.write(" ");
+                }
                 totalCostOfPart = 0;
             }
+
+            fileWriter.write("\nMultiplier Total");
+            for (int charCount = 26; charCount > "Multiplier Total".length(); charCount--) {
+                fileWriter.write(" ");
+            }
+            for (int i = 0; i < listOfQuantities.size(); i++) {
+                for (int j = 0; j < listOfServices.size(); j++) {
+                    double costOfPart = Double.parseDouble(listOfServices.get(j).getCost(i));
+                    totalCostOfPart += costOfPart;
+                }
+                totalCostOfPart += cycleCostList.get(i);
+                totalCostOfPart += setupCostList.get(i);
+                totalCostOfPart = ((multiplier/100)+1) * totalCostOfPart;
+                fileWriter.write("" + String.format("%.2f", totalCostOfPart));
+                String lengthForFormatMulti = decimalFormat.format(totalCostOfPart);
+                System.out.println(lengthForFormatMulti + "  " + lengthForFormatMulti.length());
+                for(int j = 16; j > lengthForFormatMulti.length(); j--){
+                    fileWriter.write(" ");
+                }
+                totalCostOfPart = 0;
+            }
+
+
             fileWriter.close();
         } catch (IOException error) {
             System.out.println("Something went wrong when writing the quote out");
@@ -310,6 +340,11 @@ public class QuoteController implements Initializable {
         setCycle();
         setSetup();
         System.out.println("Both Cycle and Setup were set up");
+    }
+
+    @FXML
+    public void addMultiplier() {
+        multiplier = Double.parseDouble(multiplierTextField.getText());
     }
 
     private void writeTheSetUpAndCycleCost(FileWriter fileWriter) {
