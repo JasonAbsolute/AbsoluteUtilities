@@ -4,7 +4,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +22,8 @@ public class QuoteController implements Initializable {
 
     @FXML
     private TextField quantityTextField;
+    @FXML
+    private Window mainStage;
     @FXML
     private Text textListOfQuantity;
     @FXML
@@ -56,9 +61,7 @@ public class QuoteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Setting up combo box");
         jFXComboBoxOutsideServices.getItems().addAll("Material", "Heat Treat", "Grinding", "Plating", "Laser", "Wielding", "Transportation", "Misc");
-        System.out.println("ComboBox was setup");
         masterTableView.setEditable(true);
     }
 
@@ -161,6 +164,30 @@ public class QuoteController implements Initializable {
     }
 
     @FXML
+    public void clearEverything() {
+        //TODO Make the table reset when button is clicked
+        listOfQuantities.clear();
+        listOfServices.clear();
+        cycleCostList.clear();
+        setupCostList.clear();
+        companyName = null;
+        rate = 0;
+        setup = 0;
+        cycle = 0;
+        multiplier = 0;
+        rateTextField.clear();
+        setUpTextField.clear();
+        cycleTextField.clear();
+        quoteForCompany.clear();
+        multiplierTextField.clear();
+        masterTableView.getColumns().clear();
+        System.out.println("everything was cleared");
+    }
+
+    /**
+     * clears just the table and quantity
+     */
+    @FXML
     public void clearTableContents() {
         masterTableView.getItems().clear();
         listOfServices.clear();
@@ -172,34 +199,34 @@ public class QuoteController implements Initializable {
     public void quoteButtonPressed() {
         double totalCostOfPart = 0;
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        printQouteToConsole();
+        File outPutFile;
         try {
-            FileWriter fileWriter;
+            FileChooser fileToSave = new FileChooser();
+            fileToSave.setTitle("Quote File");
+            fileToSave.setInitialFileName(companyName + ".txt");
+            fileToSave.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Txt File", "*.txt"),
+                    new FileChooser.ExtensionFilter("All Files", "*.*"));
+            outPutFile = fileToSave.showSaveDialog(mainStage);
+            FileWriter fileWriter = new FileWriter(outPutFile);
             if (companyName == null) {
                 inputError.setTitle("Input For Company Name");
-                inputError.setHeaderText("Nameing file");
-                inputError.setContentText("The file was not specifed a name/company it was \n saved as NoCompanyNamed.txt");
+                inputError.setHeaderText("Naming file");
+                inputError.setContentText("The file was not specified a name/company");
                 inputError.showAndWait();
-                fileWriter = new FileWriter("NoCompanyNamed.txt");
-                fileWriter.write("Quote For: no name was given\n");
+                fileWriter.write("Quote For: no name was given\r\n");
             } else {
-                fileWriter = new FileWriter(companyName + ".txt");
-                fileWriter.write("Quote For: " + companyName + "\n");
+                fileWriter.write("Quote For: " + companyName + "\r\n");
             }
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
-            fileWriter.write("Date Quoted: " + formatter.format(date) + "\n");
+            fileWriter.write("Date Quoted: " + formatter.format(date) + "\r\n");
             fileWriter.write("Service                ");
             for (int i = 0; i < listOfQuantities.size(); i++) {
                 fileWriter.write("Cost Of " + listOfQuantities.get(i) + "     ");
             }
-
-
-            fileWriter.write("\n");
-
+            fileWriter.write("\r\n");
             writeTheSetUpAndCycleCost(fileWriter);
-
-
             for (int j = 0; j < listOfServices.size(); j++) {
                 fileWriter.write(listOfServices.get(j).getService() + " ");
                 for (int charCount = 25; charCount > listOfServices.get(j).getService().length(); charCount--) {
@@ -213,9 +240,8 @@ public class QuoteController implements Initializable {
                         fileWriter.write(" ");
                     }
                 }
-                fileWriter.write("\n");
+                fileWriter.write("\r\n");
             }
-
             fileWriter.write("Total Cost ");
             for (int charCount = 25; charCount > "Total Cost".length(); charCount--) {
                 fileWriter.write(" ");
@@ -234,8 +260,7 @@ public class QuoteController implements Initializable {
                 }
                 totalCostOfPart = 0;
             }
-
-            fileWriter.write("\nMultiplier Total");
+            fileWriter.write("\r\nMultiplier Total");
             for (int charCount = 26; charCount > "Multiplier Total".length(); charCount--) {
                 fileWriter.write(" ");
             }
@@ -255,46 +280,32 @@ public class QuoteController implements Initializable {
                 }
                 totalCostOfPart = 0;
             }
-
-
             fileWriter.close();
         } catch (IOException error) {
             System.out.println("Something went wrong when writing the quote out");
         }
     }
 
-    private void printQouteToConsole() {
-        System.out.println(companyName);
-        System.out.print("Service                ");
-        for (int i = 0; i < listOfQuantities.size(); i++) {
-            System.out.print("Cost Of " + listOfQuantities.get(i) + "     ");
-        }
-        System.out.println("");
-        for (int j = 0; j < listOfServices.size(); j++) {
-            System.out.print(listOfServices.get(j).getService() + " ");
-            for (int charCount = 25; charCount > listOfServices.get(j).getService().length(); charCount--) {
-                System.out.print(" ");
-            }
-            for (int k = 0; k < listOfServices.get(j).getCost().size(); k++) {
-                System.out.print(listOfServices.get(j).getCost().get(k));
-                for (int charCount = 16; charCount > listOfServices.get(j).getCost(k).length(); charCount--) {
-                    System.out.print(" ");
-                }
-            }
-            System.out.println("");
-        }
-    }
-
+    /**
+     * eveytime the user enters a letter to the name field it adds to a string
+     */
     @FXML
     public void saveCompanyName() {
         companyName = quoteForCompany.getText();
+        System.out.println("Company name was set to: " + companyName);
     }
 
+    /**
+     * exits the proggram
+     */
     @FXML
     public void stopProgram() {
         System.exit(0);
     }
 
+    /**
+     * adds the rate which the part requires
+     */
     @FXML
     public void addRate() {
         if (isValidInput(rateTextField.getText())) {
@@ -309,6 +320,9 @@ public class QuoteController implements Initializable {
         }
     }
 
+    /**
+     * sets the setup
+     */
     @FXML
     public void setSetup() {
         if (isValidInput(setUpTextField.getText())) {
@@ -323,6 +337,9 @@ public class QuoteController implements Initializable {
         }
     }
 
+    /**
+     * sets the cycle
+     */
     @FXML
     public void setCycle() {
         if (isValidInput(cycleTextField.getText())) {
@@ -337,6 +354,10 @@ public class QuoteController implements Initializable {
         }
     }
 
+    /**
+     * sets the cycle and setup
+     * both can be done individually
+     */
     @FXML
     public void setCycleAndSetup() {
         setCycle();
@@ -344,11 +365,21 @@ public class QuoteController implements Initializable {
         System.out.println("Both Cycle and Setup were set up");
     }
 
+    /**
+     * sets the multiplier to the qoute
+     * this can change at any moment
+     */
     @FXML
     public void addMultiplier() {
         multiplier = Double.parseDouble(multiplierTextField.getText());
+        System.out.println("Multiplier was set to: " + multiplier);
     }
 
+    /**
+     * This method writes to the Setup and Cycle to the file.
+     *
+     * @param fileWriter
+     */
     private void writeTheSetUpAndCycleCost(FileWriter fileWriter) {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         try {
@@ -367,22 +398,22 @@ public class QuoteController implements Initializable {
                 }
                 setupCostList.add(i, cost);
             }
-            fileWriter.write("\n");
+            fileWriter.write("\r\n");
             fileWriter.write("Cycle (Minutes) ");
             int cycleLength = "Cycle (Minutes)".length();
             for (int charCount = 25; charCount > cycleLength; charCount--) {
                 fileWriter.write(" ");
             }
             for (int i = 0; i < listOfQuantities.size(); i++) {
-                double partAmount = listOfQuantities.get(i);
-                fileWriter.write(String.format("%.2f", (rate / 60 * cycle)));
-                String lengthForFormat = decimalFormat.format((rate / 60 * cycle));
-                for(int j = 16; j > lengthForFormat.length(); j--){
+                double partAmount = rate/60*cycle;
+                fileWriter.write(String.format("%.2f", partAmount));
+                String lengthForFormat = decimalFormat.format(partAmount);
+                for (int j = 16; j > lengthForFormat.length(); j--) {
                     fileWriter.write(" ");
                 }
-                cycleCostList.add((rate / 60 * cycle));
+                cycleCostList.add(partAmount);
             }
-            fileWriter.write("\n");
+            fileWriter.write("\r\n");
         } catch (Exception error) {
 
         }
